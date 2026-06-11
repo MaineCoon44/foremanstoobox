@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Foreman's Toolbox — Professional Construction Software</title>
+  <meta name="description" content="Foreman's Toolbox — a suite of professional tools built for construction foremen, field crews, and tradespeople."/>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy: #0f1e35;
+      --navy-light: #1a2f4e;
+      --gold: #c9922a;
+      --gold-light: #e8b04a;
+      --steel: #3a4a5c;
+      --light: #f4f6f9;
+      --white: #ffffff;
+      --text: #2c3e50;
+      --muted: #6b7c93;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Open Sans', sans-serif;
+      background: var(--navy);
+      color: var(--white);
+      min-height: 100vh;
+    }
+
+    /* HEADER */
+    header {
+      background: var(--navy);
+      border-bottom: 3px solid var(--gold);
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .header-logo {
+      width: 48px;
+      height: 48px;
+      object-fit: contain;
+    }
+
+    .header-title {
+      font-family: 'Oswald', sans-serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--gold-light);
+      letter-spacing: 1px;
+      line-height: 1.1;
+    }
+
+    .header-title span {
+      display: block;
+      font-size: 0.65rem;
+      font-weight: 400;
+      color: var(--muted);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    nav a {
+      color: var(--white);
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-left: 20px;
+      letter-spacing: 0.5px;
+      opacity: 0.8;
+      transition: opacity 0.2s;
+    }
+    nav a:hover { opacity: 1; color: var(--gold-light); }
+
+    /* HERO */
+    .hero {
+      background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 50%, #0a1628 100%);
+      padding: 60px 24px 56px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23c9922a' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      opacity: 0.5;
+    }
+
+    /* NEW: Three-column hero layout */
+    .hero-inner {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 32px;
+      max-width: 1200px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .hero-side {
+      flex: 0 0 220px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hero-side img {
+      width: 100%;
+      max-width: 220px;
+      height: auto;
+      object-fit: contain;
+      border-radius: 12px;
+      filter: drop-shadow(0 6px 24px rgba(0,0,0,0.5));
+      opacity: 0.92;
+      transition: opacity 0.3s, transform 0.3s;
+    }
+
+    .hero-side img:hover {
+      opacity: 1;
+      transform: scale(1.02);
+    }
+
+    .hero-side.left img {
+      filter: drop-shadow(0 4px 16px rgba(201,146,42,0.35));
+    }
+
+    .hero-center {
+      flex: 1;
+      text-align: center;
+      min-width: 0;
+    }
+
+    .hero-logo {
+      width: 90px;
+      height: 90px;
+      object-fit: contain;
+      margin-bottom: 18px;
+      filter: drop-shadow(0 4px 16px rgba(201,146,42,0.4));
+    }
+
+    .hero h1 {
+      font-family: 'Oswald', sans-serif;
+      font-size: clamp(1.8rem, 4vw, 3.2rem);
+      font-weight: 700;
+      color: var(--white);
+      letter-spacing: 2px;
+      line-height: 1.1;
+    }
+
+    .hero h1 span { color: var(--gold-light); }
+
+    .hero-tagline {
+      font-size: clamp(0.9rem, 2vw, 1.1rem);
+      color: #a0b4c8;
+      margin: 14px auto 0;
+      max-width: 480px;
+      line-height: 1.6;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      background: rgba(201,146,42,0.15);
+      border: 1px solid var(--gold);
+      color: var(--gold-light);
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 5px 14px;
+      border-radius: 20px;
+      margin-bottom: 16px;
+    }
+
+    .hero-cta {
+      margin-top: 28px;
+    }
+
+    .btn-primary {
+      display: inline-block;
+      background: linear-gradient(135deg, var(--gold), var(--gold-light));
+      color: var(--navy);
+      font-family: 'Oswald', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      padding: 13px 32px;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 4px 20px rgba(201,146,42,0.35);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(201,146,42,0.5);
+    }
+
+    .btn-secondary {
+      display: inline-block;
+      border: 2px solid rgba(255,255,255,0.3);
+      color: var(--white);
+      font-family: 'Oswald', sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+      padding: 11px 28px;
+      border-radius: 6px;
+      text-decoration: none;
+      margin-left: 10px;
+      transition: border-color 0.2s, background 0.2s;
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--gold);
+      background: rgba(201,146,42,0.1);
+    }
+
+    /* STATS BAR */
+    .stats-bar {
+      background: var(--gold);
+      padding: 20px 24px;
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      flex-wrap: wrap;
+    }
+
+    .stat { text-align: center; color: var(--navy); }
+
+    .stat-number {
+      font-family: 'Oswald', sans-serif;
+      font-size: 1.6rem;
+      font-weight: 700;
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      opacity: 0.8;
+      margin-top: 2px;
+    }
+
+    /* APPS SECTION */
+    .section {
+      padding: 64px 24px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+
+    .section-header h2 {
+      font-family: 'Oswald', sans-serif;
+      font-size: clamp(1.6rem, 4vw, 2.4rem);
+      font-weight: 700;
+      letter-spacing: 1px;
+      color: var(--white);
+    }
+
+    .section-header h2 span { color: var(--gold-light); }
+
+    .section-header p {
+      color: #a0b4c8;
+      margin-top: 10px;
+      font-size: 1rem;
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .divider {
+      width: 60px;
+      height: 3px;
+      background: var(--gold);
+      margin: 16px auto 0;
+      border-radius: 2px;
+    }
+
+    /* APP CARDS */
+    .apps-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+    }
+
+    .app-card {
+      background: var(--navy-light);
+      border: 1px solid rgba(201,146,42,0.2);
+      border-radius: 12px;
+      padding: 28px 24px;
+      position: relative;
+      transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+      overflow: hidden;
+    }
+
+    .app-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--gold);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+    }
+
+    .app-card.featured {
+      border-color: var(--gold);
+      box-shadow: 0 4px 20px rgba(201,146,42,0.15);
+    }
+
+    .app-card.coming-soon { opacity: 0.7; }
+
+    .card-badge {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 12px;
+    }
+
+    .badge-live {
+      background: rgba(34, 197, 94, 0.15);
+      color: #4ade80;
+      border: 1px solid rgba(34, 197, 94, 0.3);
+    }
+
+    .badge-soon {
+      background: rgba(201,146,42,0.15);
+      color: var(--gold-light);
+      border: 1px solid rgba(201,146,42,0.3);
+    }
+
+    .badge-beta {
+      background: rgba(99, 102, 241, 0.15);
+      color: #a5b4fc;
+      border: 1px solid rgba(99, 102, 241, 0.3);
+    }
+
+    .app-icon {
+      font-size: 2.5rem;
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    .app-card h3 {
+      font-family: 'Oswald', sans-serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--white);
+      letter-spacing: 0.5px;
+      margin-bottom: 8px;
+    }
+
+    .app-card .app-subtitle {
+      font-size: 0.75rem;
+      color: var(--gold-light);
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .app-card p {
+      color: #a0b4c8;
+      font-size: 0.9rem;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    .app-features {
+      list-style: none;
+      margin-bottom: 24px;
+    }
+
+    .app-features li {
+      font-size: 0.85rem;
+      color: #c0d0e0;
+      padding: 4px 0;
+      padding-left: 18px;
+      position: relative;
+    }
+
+    .app-features li::before {
+      content: '▸';
+      color: var(--gold);
+      position: absolute;
+      left: 0;
+    }
+
+    .app-tiers {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .tier {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 20px;
+      padding: 3px 10px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: #a0b4c8;
+    }
+
+    .app-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: linear-gradient(135deg, var(--gold), var(--gold-light));
+      color: var(--navy);
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      padding: 10px 20px;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .app-link:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 16px rgba(201,146,42,0.4);
+    }
+
+    .app-link.disabled {
+      background: rgba(255,255,255,0.1);
+      color: #6b7c93;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+
+    /* TIERS SECTION */
+    .tiers-section {
+      background: var(--navy-light);
+      padding: 64px 24px;
+      border-top: 1px solid rgba(201,146,42,0.15);
+      border-bottom: 1px solid rgba(201,146,42,0.15);
+    }
+
+    .tiers-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 24px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .tier-card {
+      background: var(--navy);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px;
+      padding: 28px 24px;
+      text-align: center;
+      transition: border-color 0.2s;
+    }
+
+    .tier-card.popular {
+      border-color: var(--gold);
+      position: relative;
+    }
+
+    .tier-card.popular::before {
+      content: 'MOST POPULAR';
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--gold);
+      color: var(--navy);
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      padding: 4px 12px;
+      border-radius: 12px;
+    }
+
+    .tier-name {
+      font-family: 'Oswald', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--gold-light);
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+    }
+
+    .tier-price {
+      font-family: 'Oswald', sans-serif;
+      font-size: 2.4rem;
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1;
+    }
+
+    .tier-price span {
+      font-size: 1rem;
+      color: var(--muted);
+      font-weight: 400;
+    }
+
+    .tier-desc {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin: 10px 0 20px;
+    }
+
+    .tier-features {
+      list-style: none;
+      text-align: left;
+    }
+
+    .tier-features li {
+      font-size: 0.82rem;
+      color: #a0b4c8;
+      padding: 5px 0;
+      padding-left: 20px;
+      position: relative;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+    }
+
+    .tier-features li::before {
+      content: '✓';
+      color: var(--gold);
+      position: absolute;
+      left: 0;
+      font-weight: 700;
+    }
+
+    /* ABOUT */
+    .about-section {
+      padding: 64px 24px;
+      max-width: 800px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .about-section p {
+      color: #a0b4c8;
+      font-size: 1rem;
+      line-height: 1.8;
+      margin-top: 24px;
+    }
+
+    /* FOOTER */
+    footer {
+      background: #080f1a;
+      border-top: 3px solid var(--gold);
+      padding: 40px 24px 24px;
+      text-align: center;
+    }
+
+    .footer-brand {
+      font-family: 'Oswald', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--gold-light);
+      letter-spacing: 2px;
+      margin-bottom: 8px;
+    }
+
+    .footer-tagline {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-bottom: 24px;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      flex-wrap: wrap;
+      margin-bottom: 24px;
+    }
+
+    .footer-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.82rem;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover { color: var(--gold-light); }
+
+    .footer-copy {
+      font-size: 0.75rem;
+      color: #3a4a5c;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      nav { display: none; }
+      .hero-side { display: none; }
+      .hero { padding: 48px 20px 40px; }
+      .btn-secondary { display: none; }
+      .stats-bar { gap: 20px; }
+    }
+
+    @media (max-width: 900px) {
+      .hero-side {
+        flex: 0 0 160px;
+      }
+      .hero-side img {
+        max-width: 160px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <div class="header-brand">
+      <img src="https://media.base44.com/images/public/6a12630c22b0dea052b9fde5/fbb10cd05_generated_image.png" alt="Foreman's Toolbox Logo" class="header-logo"/>
+      <div class="header-title">
+        FOREMAN'S TOOLBOX
+        <span>Professional Construction Software</span>
+      </div>
+    </div>
+    <nav>
+      <a href="#apps">Apps</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#about">About</a>
+      <a href="https://siteforge.space" target="_blank">Launch SiteForge</a>
+    </nav>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-inner">
+
+      <!-- LEFT: Crest / Brand Logo -->
+      <div class="hero-side left">
+        <img
+          src="https://media.base44.com/images/public/6a12630c22b0dea052b9fde5/fbb10cd05_generated_image.png"
+          alt="Foreman's Toolbox Crest"
+        />
+      </div>
+
+      <!-- CENTER: Text & CTA -->
+      <div class="hero-center">
+        <div class="hero-badge">Built for the Field. By the Field.</div>
+        <h1>FOREMAN'S <span>TOOLBOX</span></h1>
+        <p class="hero-tagline">A suite of professional software tools built for construction foremen, field crews, and tradespeople who need real solutions — not more paperwork.</p>
+        <div class="hero-cta">
+          <a href="https://siteforge.space" target="_blank" class="btn-primary">Launch SiteForge ↗</a>
+          <a href="#apps" class="btn-secondary">See All Apps</a>
+        </div>
+      </div>
+
+      <!-- RIGHT: Foreman at Gang Box -->
+      <div class="hero-side right">
+        <img
+          src="https://media.base44.com/images/public/6a12630c22b0dea052b9fde5/71f8fcb69_ChatGPTImageJun6202611_40_12PM.png"
+          alt="Foreman at Gang Box"
+        />
+      </div>
+
+    </div>
+  </section>
+
+  <!-- STATS BAR -->
+  <div class="stats-bar">
+    <div class="stat">
+      <div class="stat-number">5+</div>
+      <div class="stat-label">Apps in Suite</div>
+    </div>
+    <div class="stat">
+      <div class="stat-number">100%</div>
+      <div class="stat-label">Mobile First</div>
+    </div>
+    <div class="stat">
+      <div class="stat-number">3</div>
+      <div class="stat-label">Pricing Tiers</div>
+    </div>
+    <div class="stat">
+      <div class="stat-number">24/7</div>
+      <div class="stat-label">Field Ready</div>
+    </div>
+  </div>
+
+  <!-- APPS -->
+  <section class="section" id="apps">
+    <div class="section-header">
+      <h2>THE <span>TOOLBOX</span></h2>
+      <p>Every tool a foreman needs, built for the way you actually work.</p>
+      <div class="divider"></div>
+    </div>
+
+    <div class="apps-grid">
+
+      <!-- SITEFORGE -->
+      <div class="app-card featured">
+        <span class="card-badge badge-live">● Live</span>
+        <span class="app-icon">🏗️</span>
+        <h3>SiteForge</h3>
+        <div class="app-subtitle">Field Operations Manager</div>
+        <p>Time tracking, crew management, daily reports, and job documentation — all in one place. Built for foremen running real crews on real job sites.</p>
+        <ul class="app-features">
+          <li>Crew time tracking by job number</li>
+          <li>Auto-filled daily weather reports</li>
+          <li>Professional timesheet exports</li>
+          <li>NEC code assistant (AI-powered)</li>
+          <li>Materials & equipment tracking</li>
+        </ul>
+        <div class="app-tiers">
+          <span class="tier">Solo $9/mo</span>
+          <span class="tier">Team $75/mo</span>
+          <span class="tier">Company $199/mo</span>
+        </div>
+        <a href="https://siteforge.space" target="_blank" class="app-link">Launch App ↗</a>
+      </div>
+
+      <!-- SUBSURFACE -->
+      <div class="app-card coming-soon">
+        <span class="card-badge badge-soon">Coming Soon</span>
+        <span class="app-icon">⚡</span>
+        <h3>SubSurface</h3>
+        <div class="app-subtitle">Underground As-Built Tracker</div>
+        <p>Document underground infrastructure as it's installed — conduit, pipe, wiring, and utilities. GPS-tagged, photo-documented, and exportable for as-built drawings.</p>
+        <ul class="app-features">
+          <li>GPS-tagged installation records</li>
+          <li>Photo documentation per segment</li>
+          <li>Exportable as-built reports</li>
+          <li>Depth, material & type logging</li>
+        </ul>
+        <a href="#" class="app-link disabled">Notify Me</a>
+      </div>
+
+      <!-- STELLARSTACK -->
+      <div class="app-card coming-soon">
+        <span class="card-badge badge-soon">Coming Soon</span>
+        <span class="app-icon">🔭</span>
+        <h3>StellarStack</h3>
+        <div class="app-subtitle">Astrophotography Session Manager</div>
+        <p>Organize your imaging sessions, manage FITS files via cloud storage, and track your targets. Built for backyard astronomers who want less software juggling.</p>
+        <ul class="app-features">
+          <li>DWARF 3 & ASIAIR integration</li>
+          <li>OneDrive FITS file sync</li>
+          <li>Session logs & target tracking</li>
+          <li>Community gallery</li>
+        </ul>
+        <a href="#" class="app-link disabled">Notify Me</a>
+      </div>
+
+
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section class="tiers-section" id="pricing">
+    <div class="section-header" style="margin-bottom: 40px;">
+      <h2>SIMPLE <span>PRICING</span></h2>
+      <p>Start free. Scale when you're ready. No hidden fees.</p>
+      <div class="divider"></div>
+    </div>
+
+    <div class="tiers-grid">
+      <div class="tier-card">
+        <div class="tier-name">SOLO</div>
+        <div class="tier-price">$9<span>/mo</span></div>
+        <div class="tier-desc">Perfect for independent foremen</div>
+        <ul class="tier-features">
+          <li>1 user</li>
+          <li>Full SiteForge access</li>
+          <li>Daily reports & timesheets</li>
+          <li>Email exports</li>
+          <li>Mobile app</li>
+        </ul>
+      </div>
+
+      <div class="tier-card popular">
+        <div class="tier-name">TEAM</div>
+        <div class="tier-price">$75<span>/mo</span></div>
+        <div class="tier-desc">For foremen running a crew</div>
+        <ul class="tier-features">
+          <li>Up to 15 crew members</li>
+          <li>Full SiteForge access</li>
+          <li>Crew time tracking</li>
+          <li>Job number grouping</li>
+          <li>PDF report generation</li>
+          <li>Priority support</li>
+        </ul>
+      </div>
+
+      <div class="tier-card">
+        <div class="tier-name">COMPANY</div>
+        <div class="tier-price">$199<span>/mo</span></div>
+        <div class="tier-desc">For GFs managing multiple crews</div>
+        <ul class="tier-features">
+          <li>Unlimited users</li>
+          <li>GF Rollup Report</li>
+          <li>Multi-crew consolidation</li>
+          <li>Advanced analytics</li>
+          <li>Custom branding</li>
+          <li>Dedicated support</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="about-section" id="about">
+    <div class="section-header">
+      <h2>BUILT FOR <span>THE FIELD</span></h2>
+      <div class="divider"></div>
+    </div>
+    <p>Foreman's Toolbox was built by someone who understands what it's like to run a crew. These aren't apps designed in a boardroom — they're tools designed for the dirt, the noise, and the real demands of construction work.</p>
+    <p>Every app in the Toolbox is mobile-first, built to work on a phone in a hard hat, in the sun, on a job site. No bloat. No unnecessary complexity. Just tools that work.</p>
+    <p style="margin-top: 24px;">
+      <a href="https://siteforge.space" target="_blank" class="btn-primary">Get Started with SiteForge →</a>
+    </p>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-brand">FOREMAN'S TOOLBOX</div>
+    <div class="footer-tagline">Professional Construction Software Suite</div>
+    <div class="footer-links">
+      <a href="https://siteforge.space" target="_blank">SiteForge</a>
+      <a href="#apps">All Apps</a>
+      <a href="#pricing">Pricing</a>
+      <a href="mailto:support@siteforge.space">Contact</a>
+    </div>
+    <div class="footer-copy">© 2026 Foreman's Toolbox · foremanstoolbox.com · All rights reserved.</div>
+  </footer>
+
+</body>
+</html>
